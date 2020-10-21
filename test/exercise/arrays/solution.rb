@@ -5,8 +5,8 @@ module Exercise
         return nil if array.empty?
 
         max_elem = max(array)
-        for i in 0 .. array.length - 1
-          array[i] = max_elem if array[i] > 0
+        for i in 0..array.length - 1
+          array[i] = max_elem if array[i].positive?
         end
         array
       end
@@ -21,7 +21,7 @@ module Exercise
       end
 
       def search(array, query)
-        return -1 if array.empty? 
+        return -1 if array.empty?
 
         binary_search(array, query, 0, array.length - 1)
       end
@@ -29,13 +29,13 @@ module Exercise
       def binary_search(array, query, left, right)
         mid = left + (right - left) / 2
 
-        return mid if(array[mid] == query)
+        return mid if array[mid] == query
 
-        return -1 if(left >= right)
+        return -1 if left >= right
 
-        return binary_search(array, query, left,  mid - 1)  if (array[mid] > query)
+        return binary_search(array, query, left, mid - 1) if array[mid] > query
 
-        return binary_search(array, query, mid + 1, right)
+        binary_search(array, query, mid + 1, right)
       end
     end
   end
