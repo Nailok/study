@@ -1,11 +1,21 @@
 module Exercise
   module Fp2
     class MyArray < Array
-      # Использовать стандартные функции массива для решения задач нельзя.
-      # Использовать свои написанные функции для реализации следующих - можно.
+      attr_reader :array
 
-      # Написать свою функцию my_each
-      def my_each; end
+      def initialize(array)
+        @array = array.dup.freeze
+      end
+
+      def my_each
+        i = 0
+        while i < @array.length
+          yield(@array[i])
+          i += 1
+        end
+
+        @array
+      end
 
       # Написать свою функцию my_map
       def my_map; end
