@@ -3,45 +3,45 @@ module Exercise
     class MyArray < Array
       attr_reader :array
 
-      def initialize(array=nil)
-        @array = array.dup.freeze
-      end
-
       def my_each
         i = 0
-        while i < @array.length
-          yield(@array[i])
+        while i < self.length
+          yield(self[i])
           i += 1
         end
 
-        @array
+        self
       end
 
-      # Написать свою функцию my_map
       def my_map
+        result = MyArray.new
+        self.my_reduce(result) { |result, item| result << yield(item) }
       end
+      
+      def my_compact
+        result = MyArray.new
+        self.my_each { |item| result << item unless item.nil? }
 
-      # Написать свою функцию my_compact
-      def my_compact; end
-
-      # Написать свою функцию my_reduce
-      def my_reduce(start_value=nil)
-        if start_value == nil
-          start_value = @array[0] 
-          i = 1
-        else
-          i = 0
-        end
-
-        result = start_value
-        while i < @array.length
-          result = yield(result, @array[i])
-          i += 1
-        end
-        
         result
       end
 
+      def my_reduce(start_value=nil, &block)
+        temp_arr = self.dup
+        start_value = temp_arr.shift if start_value.nil?
+
+        my_reduce_req(start_value, temp_arr, &block)
+      end
+
+
+      private 
+
+      def my_reduce_req(accumulator, arr, &block)
+        return accumulator if arr.empty?
+        accumulator = yield(accumulator, arr.first)
+        
+        arr.shift
+        my_reduce_req(accumulator, arr, &block)
+      end
     end
   end
 end
