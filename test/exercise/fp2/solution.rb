@@ -1,8 +1,6 @@
 module Exercise
   module Fp2
     class MyArray < Array
-      attr_reader :array
-
       def my_each
         i = 0
         while i < length
