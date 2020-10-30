@@ -7,11 +7,12 @@ module Exercise
 
       def rating(array)
         films = array.select do |film|
-          !film['country'].nil? && film['country'].include?(',') &&
+          !film['country'].nil? && film['country'].split(',').length >= 2 &&
             !film['rating_kinopoisk'].nil? && film['rating_kinopoisk'].to_f.positive?
         end
 
-        films.map { |film| film['rating_kinopoisk'].to_f }.reduce(:+) / films.size
+        films_raiting = films.map { |film| film['rating_kinopoisk'].to_f }
+        films_raiting.reduce(:+) / films.size
       end
 
       def chars_count(array, threshold)
