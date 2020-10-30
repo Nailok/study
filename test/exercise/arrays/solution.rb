@@ -5,19 +5,11 @@ module Exercise
         return nil if array.empty?
 
         max_elem = max(array)
-        for i in 0..array.length - 1
-          array[i] = max_elem if array[i].positive?
-        end
-        array
+        array.map { |item| item.positive? ? max_elem : item }
       end
 
       def max(array)
-        max = array[0]
-
-        array.each do |elem|
-          max = elem if max < elem
-        end
-        max
+        array.reduce(array[0]) { |max, item| max < item ? item : max }
       end
 
       def search(array, query)
