@@ -11,8 +11,8 @@ module Exercise
             !film['rating_kinopoisk'].nil? && film['rating_kinopoisk'].to_f.positive?
         end
 
-        films_raiting = films.map { |film| film['rating_kinopoisk'].to_f }
-        films_raiting.reduce(:+) / films.size
+        rating_sum = films.map { |film| film['rating_kinopoisk'].to_f }.reduce(:+)
+        average_rating = rating_sum / films.size
       end
 
       def chars_count(array, threshold)
@@ -21,7 +21,7 @@ module Exercise
             film['rating_kinopoisk'].to_f >= threshold
         end
 
-        films.map { |film| film['name'].count 'и' }.reduce(:+)
+        films.reduce(0) { |sum, film| sum + film['name'].count('и') }
       end
     end
   end
